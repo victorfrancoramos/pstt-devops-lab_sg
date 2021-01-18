@@ -1,8 +1,0 @@
-[hosts]
-  linux1
-[data]
-  linux1
-[masters]
-  linux1
-[coordinating]
-  linux1
