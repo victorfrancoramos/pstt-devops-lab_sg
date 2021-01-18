@@ -6,7 +6,7 @@
     # This section contains the tenant specific information
     tenant_username: root
     tenant_password: netapp01
-    tenant_name: storagegrid-workshop
+    tenant_name: pstt-devops-lab_sg
     tenant_quota: 200
     tenant_bucket:
       - ansible-bucket

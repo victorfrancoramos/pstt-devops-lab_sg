@@ -3,7 +3,7 @@
   collections:
     - netapp.storagegrid
   vars_files:
-    /root/git/storagegrid-workshop/Module-0/01-sg_vars.yml
+    /root/git/pstt-devops-lag_sg/04-sg_vars.yml
   gather_facts: no
   tasks:
   - name: Get grid authorization token
@@ -21,7 +21,7 @@
     register: auth
  
   - name: Obtain StorageGRID Account Token
-    nac_sg_grid_account:
+    na_sg_grid_account:
       api_url: "{{ grid_admin_base_url }}"
       auth_token: "{{ auth.json.data }}"
       validate_certs: false

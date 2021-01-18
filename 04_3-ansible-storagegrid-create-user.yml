@@ -3,7 +3,7 @@
   collections:
     - netapp.storagegrid
   vars_files:
-    /root/git/storagegrid-workshop/Module-0/01-sg_vars.yml
+    /root/git/pstt-devops-lag_sg/04-sg_vars.yml
   gather_facts: no
   tasks:
   - name: Get grid authorization token
@@ -19,18 +19,18 @@
       body_format: json
       validate_certs: false
     register: auth
- 
-  - name: Create a StorageGRID Tenant
-    nac_sg_grid_account:
+  
+  - name: Obtain StorageGRID Account Token
+    na_sg_grid_account:
       api_url: "{{ grid_admin_base_url }}"
       auth_token: "{{ auth.json.data }}"
       validate_certs: false
       state: present
-      name: thePub
+      name: "{{ tenant_name }}"
       protocol: s3
       management: true
-      use_own_identity_source: false
-      allow_platform_services: false
+      use_own_identity_source: "{{ tenant_use_own_identity_source }}"
+      allow_platform_services: "{{ tenant_platform_services }}"
       password: "{{ tenant_password }}"
       quota_size: 100
     register: account
@@ -50,23 +50,8 @@
       validate_certs: false
     register: auth
  
-  - name: Create a group
-    nac_sg_org_group:
-      api_url: "{{ grid_admin_base_url }}"
-      auth_token: "{{ auth.json.data }}"
-      validate_certs: false
-      state: present
-      display_name: "{{ tenant_group_description }}"
-      unique_name: "group/{{ tenant_group }}"
-      management_policy:
-        manage_all_containers: true
-        manage_endpoints: true
-        manage_own_s3_credentials: false
-        root_access: false
-      s3_policy: {"Statement":[{"Effect":"Allow","Action":"s3:*","Resource":"arn:aws:s3:::*"}]} 
-
   - name: Create users
-    nac_sg_org_user:
+    na_sg_org_user:
       api_url: "{{ grid_admin_base_url }}"
       auth_token: "{{ auth.json.data }}"
       validate_certs: false
@@ -76,19 +61,5 @@
       member_of: "group/{{ tenant_group }}"
     with_items: "{{ tenant_users }}"
  
-  - name: Create a s3 key for our users
-    nac_sg_org_user_s3_key:
-      api_url: "{{ grid_admin_base_url }}"
-      auth_token: "{{ auth.json.data }}"
-      validate_certs: false
-      state: present
-      unique_user_name: "user/{{ item }}"
-    with_items: "{{ users }}"
+
  
-  - name: Create a s3 bucket
-    nac_sg_org_container:
-      api_url: "{{ grid_admin_base_url }}"
-      auth_token: "{{ auth.json.data }}"
-      validate_certs: false
-      state: present
-      name: thepub-bucket1

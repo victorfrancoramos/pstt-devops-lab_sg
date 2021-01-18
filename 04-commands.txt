@@ -1,0 +1,6 @@
+cd  /root/git/pstt-devops-lab_sg
+ansible-playbook 04_1-ansible-storagegrid-create-tenant.yml
+ansible-playbook 04_2-ansible-storagegrid-create-group.yml
+ansible-playbook 04_3-ansible-storagegrid-create-user.yml
+ansible-playbook 04_4-ansible-storagegrid-create-keys.yml -v
+ansible-playbook 04_5-ansible-storagegrid-create-bucket.yml

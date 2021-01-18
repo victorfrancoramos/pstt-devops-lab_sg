@@ -1,2 +1,0 @@
-sudo find / -name custom.conf
-sudo vi /etc/storagegrid-persistence.d/custom.conf
