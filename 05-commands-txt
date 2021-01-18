@@ -1,15 +1,22 @@
 yum install -y python-pip
 pip install --upgrade pip
+aws --version
+pip install --upgrade awscli
+cd ~
+
 mkdir ~/.aws
+
+nano ~/.aws/credentials
 
 [storagegridlab]
 aws_access_key_id = <S3-Access-Key>
 aws_secret_access_key = <S3-secret-key>
 
-aws s3 ls -–profile storagegridlab -–endpoint-url http://192.168.0.170:10443 
+aws s3 ls --profile storagegridlab --endpoint-url http://192.168.0.170:10443
 
+nano ~/.bashrc
 
-# Alias for Storagegrid
+# Alias for StorageGRID
 sg_cmd() {
   CMD="aws ${@:1} --profile storagegridlab --endpoint-url http://192.168.0.170:10443"
   echo "Executing \"${CMD}\""
@@ -19,7 +26,9 @@ alias sg=sg_cmd
 
 source ~/.bashrc
 
-vi mynewobject.txt
+sg s3 ls
+
+nano mynewobject.txt
 
 sg s3api put-object --bucket bucket-elasticsearch \
 --metadata project=topsecret,costcode=00001 \
