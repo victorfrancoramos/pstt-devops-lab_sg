@@ -3,7 +3,7 @@
   collections:
     - netapp.storagegrid
   vars_files:
-    /root/git/pstt-devops-lag_sg/04-sg_vars.yml
+    /root/git/pstt-devops-lab_sg/04-sg_vars.yml
   gather_facts: no
   tasks:
   - name: Get grid authorization token
