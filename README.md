@@ -1,4 +1,4 @@
-# pstt-devops-lab
+# pstt-devops-lab_sg
 
 This code will be used for one of the full demonstration labs for "PSTT - DevOps" and it intends to demonstrate the joint use of several technologies as covered in the training (In this particular example: Object Storage, Ansible and Python).
 
